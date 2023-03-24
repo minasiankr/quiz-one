@@ -1,0 +1,48 @@
+import React, { useState } from 'react';
+
+function Quiz() {
+  const questions = [
+    {
+      question: 'Какое число вам больше нравится?',
+      answers: ['Один', 'Два', 'Три', 'Четыре', 'Пять'],
+      correctAnswer: 'Три',
+    },
+    // Добавьте здесь дополнительные вопросы, если требуется
+  ];
+
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [score, setScore] = useState(0);
+
+  const handleAnswerClick = (answer) => {
+    // Проверяем, правильный ли ответ
+    if (answer === questions[currentQuestion].correctAnswer) {
+      setScore(score + 1);
+    }
+
+    // Переходим к следующему вопросу
+    const nextQuestion = currentQuestion + 1;
+    if (nextQuestion < questions.length) {
+      setCurrentQuestion(nextQuestion);
+    } else {
+      // Показываем результаты квиза, если достигнут последний вопрос
+      alert(`Вы набрали ${score} из ${questions.length} баллов!`);
+    }
+  };
+
+  return (
+    <div>
+      <h1>{questions[currentQuestion].question}</h1>
+      <ul>
+        {questions[currentQuestion].answers.map((answer) => (
+          <li key={answer} onClick={() => handleAnswerClick(answer)}>
+            {answer}
+          </li>
+        ))}
+      </ul>
+      <div style={{backgroundColor: '#0020f5', width: `${(currentQuestion + 1) / questions.length * 100}%`, height: '10px'}}></div>
+      <button style={{backgroundColor: '#0020f5', color: '#fff', padding: '10px', marginTop: '10px'}} onClick={() => handleAnswerClick()}>Далее</button>
+    </div>
+  );
+}
+
+export default Quiz;
